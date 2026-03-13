@@ -1,3 +1,9 @@
+[![CI](https://github.com/grimdork/cogroup/actions/workflows/ci.yml/badge.svg)](https://github.com/grimdork/cogroup/actions)
+[![Go Reference](https://pkg.go.dev/badge/github.com/grimdork/cogroup.svg)](https://pkg.go.dev/github.com/grimdork/cogroup)
+[![Go Report Card](https://goreportcard.com/badge/github.com/grimdork/cogroup)](https://goreportcard.com/report/github.com/grimdork/cogroup)
+[![License](https://img.shields.io/github/license/grimdork/cogroup.svg)](https://github.com/grimdork/cogroup/blob/main/LICENSE)
+[![Release](https://img.shields.io/github/v/tag/grimdork/cogroup?label=release)](https://github.com/grimdork/cogroup/tags)
+
 # cogroup
 
 cogroup is a tiny utility that exposes a WaitGroup-like API with a readable
