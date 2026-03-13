@@ -5,9 +5,11 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch: {}
 
 jobs:
   build:
+    name: Build & Lint
     runs-on: ubuntu-latest
     env:
       # Opt into Node.js 24 for JavaScript-based actions to avoid deprecation warnings
@@ -47,3 +49,38 @@ jobs:
 
     - name: Run staticcheck
       run: staticcheck ./...
+
+  benchmarks:
+    name: Benchmarks
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+
+    - name: Cache Go modules
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-bench-${{ hashFiles('**/go.mod') }}
+        restore-keys: |
+          ${{ runner.os }}-go-bench-
+
+    - name: Run benchmarks
+      run: |
+        # Run benchmarks and save results; keep reasonable timeout
+        go test -bench=. -benchmem ./... > bench-results.txt
+        echo "Benchmarks complete; results at bench-results.txt"
+
+    - name: Upload benchmark results
+      uses: actions/upload-artifact@v4
+      with:
+        name: bench-results
+        path: bench-results.txt
