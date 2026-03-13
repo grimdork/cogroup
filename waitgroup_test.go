@@ -82,6 +82,12 @@ func BenchmarkCoGroupAddDoneWork(b *testing.B) {
 	benchmarkCoGroupAddDone(b, 100)
 }
 
+// Heavier work to make benchmarks run longer and give better resolution for
+// comparison on slower machines or CI runners.
+func BenchmarkCoGroupAddDoneHeavy(b *testing.B) {
+	benchmarkCoGroupAddDone(b, 1000)
+}
+
 func benchmarkCoGroupWait(b *testing.B, localWork int) {
 	var co cogroup.CoGroup
 	b.RunParallel(func(pb *testing.PB) {
@@ -103,6 +109,10 @@ func BenchmarkCoGroupWait(b *testing.B) {
 
 func BenchmarkCoGroupWaitWork(b *testing.B) {
 	benchmarkCoGroupWait(b, 100)
+}
+
+func BenchmarkCoGroupWaitWorkHeavy(b *testing.B) {
+	benchmarkCoGroupWait(b, 1000)
 }
 
 func BenchmarkWaitGroupActuallyWait(b *testing.B) {
