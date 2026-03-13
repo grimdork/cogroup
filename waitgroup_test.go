@@ -50,6 +50,8 @@ func BenchmarkCoGroupUncontended(b *testing.B) {
 	}
 	b.RunParallel(func(pb *testing.PB) {
 		var wg PaddedCoGroup
+		// reference the padding to avoid staticcheck U1000 "unused field" warning
+		_ = wg.pad
 		for pb.Next() {
 			wg.Add(1)
 			wg.Done()
